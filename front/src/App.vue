@@ -6,22 +6,10 @@
 
 <style>
 #app {
-
-  text-align: center;
+font-family: Avenir, Helvetica, Arial, sans-serif;
+  height: 100vh;
+  width: 100vw;
   background-color: #e1e1e7;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
 }
 
 

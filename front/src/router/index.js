@@ -15,11 +15,9 @@ const routes = [
     },
 
     ...publicRoutes.map(route => {
-        route.meta.requireAuth = false
         return {...route}
     }),
     ...privateRoutes.map(route => {
-        route.meta.requireAuth = true
         return {...route}
     }),
 
