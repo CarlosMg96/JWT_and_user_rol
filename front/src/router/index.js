@@ -56,9 +56,18 @@ router.beforeEach(async (to, from, next) => {
     if (authRequired && !loggedIn) {
         return next({name: "login"})
     }
+    if (loggedIn && to.path.includes( "login" )) {
+        const role = await util.getRoleNameBytoken()
+        if (role === "ROLE_ADMIN") return next({name: "adminView"})
+        if (role === "ROLE_USER") return next({name: "userView"})
+        localStorage.removeItem("token")
+        return next({name: "login"})
+    }
     if (loggedIn) {
         const role = await util.getRoleNameBytoken()
-
+        if (!to.meta.role){
+            return next()
+        }
         if (role !== undefined && role !== null && role !== "") {
             if (to.meta.role.toLowerCase() !== role.toLowerCase()) {
                 return next({name: "unauthorized"})
@@ -67,13 +76,6 @@ router.beforeEach(async (to, from, next) => {
             return next({name: "login"})
         }
         next();
-    }
-    if (loggedIn && to.path.includes( "login" )) {
-        const role = await util.getRoleNameBytoken()
-        if (role.toLowerCase() === "admin") return next({name: "adminView"})
-        if (role.toLowerCase() === "client") return next({name: "userView"})
-        localStorage.removeItem("token")
-        return next({name: "login"})
     }
     next()
 })

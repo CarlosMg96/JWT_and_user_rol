@@ -3,8 +3,9 @@ import jwtDecode from "jwt-decode"
 const getRoleNameBytoken = async () => {
     try {
         const token = getToken();
-        const {role: {name}} = jwtDecode(token)
-        return name
+        const {role} = jwtDecode(token)
+        console.log(role)
+        return role
     } catch (error) {
         removeToken()
     }

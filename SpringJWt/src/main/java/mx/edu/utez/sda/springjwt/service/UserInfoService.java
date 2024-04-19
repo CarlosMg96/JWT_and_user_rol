@@ -31,4 +31,8 @@ public class UserInfoService implements UserDetailsService{
         repository.save(userInfo);
         return "Uusuario guardado";
     }
+
+    public UserInfo findByUsername(String username){
+        return repository.findByUsername(username).orElse(null);
+    }
 }

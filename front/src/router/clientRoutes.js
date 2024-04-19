@@ -7,7 +7,7 @@ export default [
         component: ClientsView,
         meta: {
             title: 'Panel Cliente',
-            role: 'client',
+            role: 'ROLE_USER',
             requireAuth: true
         }
     }

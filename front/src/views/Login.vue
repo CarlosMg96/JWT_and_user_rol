@@ -2,23 +2,24 @@
   <div class="shape">
     <b-row class="w-100 justify-content-center">
       <b-col class="" cols="12" lg="5" md="8">
-        <form>
+        <form @submit.prevent="login">
           <div class="login">
             <div class="body-login">
               <h1>Inicio de sesión</h1>
               <div class="form-group mt-3">
                 <label for="email">Correo electrónico</label>
-                <BInput id="email" aria-describedby="emailHelp" class="form-control"
+                <BInput v-model="username" id="email" aria-describedby="emailHelp" class="form-control"
                        placeholder="Ingresa tu correo electrónico"
                        type="email"/>
               </div>
               <div class="form-group mt-3">
                 <label for="password">Contraseña</label>
-                <BInput id="password" class="form-control" placeholder="Contraseña" type="password"/>
+                <BInput v-model="password" id="password" class="form-control" placeholder="Contraseña" type="password"/>
               </div>
+              <b-alert show variant="danger" v-if="badCredentials">Credenciales incorrectas</b-alert>
             </div>
             <div class="text-center">
-              <BButton block variant="outline-primary"><b> Iniciar sesión </b></BButton>
+              <BButton block variant="outline-primary" type="submit"><b> Iniciar sesión </b></BButton>
               <p class="mt-3"><b-link  to="/home">Página de inicio</b-link></p>
             </div>
           </div>
@@ -28,8 +29,29 @@
   </div>
 </template>
 <script>
+import {login} from "@/service/service-http";
+
 export default {
-  name: 'LoginView'
+  name: 'LoginView',
+  data() {
+    return {
+      username: '',
+      password: '',
+      badCredentials: false
+    }
+  },
+  methods: {
+    async login() {
+      const credentials = {
+        username: this.username,
+        password: this.password
+      }
+      const {status} = await login(credentials);
+      if (status !== 200){
+        this.badCredentials = true;
+      }
+    }
+  }
 }
 </script>
 
