@@ -17,7 +17,10 @@
                 <input id="password" class="form-control" placeholder="Contraseña" type="password">
               </div>
             </div>
-            <BButton variant="outline-primary" block><b> Iniciar sesión </b></BButton>
+            <div class="text-center">
+              <BButton block variant="outline-primary"><b> Iniciar sesión </b></BButton>
+              <p class="mt-3"><b-link  to="/home">Página de inicio</b-link></p>
+            </div>
           </div>
         </form>
       </b-col>
@@ -32,7 +35,7 @@ export default {
 
 <style scoped>
 
-.shape{
+.shape {
   width: 100%;
   height: 100%;
   display: flex;
@@ -43,6 +46,7 @@ export default {
   background-size: cover;
   background-position: center;
 }
+
 .login {
   width: 100%;
   min-height: 50vh;
@@ -59,16 +63,17 @@ export default {
   color: white;
 }
 
-.form-control{
+.form-control {
   background-color: rgba(255, 255, 255, 0.4);
   color: white;
 }
-.form-control::placeholder{
+
+.form-control::placeholder {
   color: white;
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
 }
 
-.form-control:focus{
+.form-control:focus {
   background-color: rgba(255, 255, 255, 0.6);
   font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif;
   color: black;
