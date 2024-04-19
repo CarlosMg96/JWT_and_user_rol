@@ -26,7 +26,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url('@/assets/home.jpg');
+  background-image: url('@/assets/cerezos2.jpg');
   background-size: cover;
   background-position: center;
   --webkit-backdrop-filter: blur(17px);
