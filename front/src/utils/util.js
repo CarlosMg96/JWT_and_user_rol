@@ -2,13 +2,13 @@ import jwtDecode from "jwt-decode"
 
 const getRoleNameBytoken = async () => {
     try {
-     const tokenDecrypted = getToken();
-     const { role : {name}} = jwtDecode(tokenDecrypted)
-     return name
+        const token = getToken();
+        const {role: {name}} = jwtDecode(token)
+        return name
     } catch (error) {
-         removeToken()
+        removeToken()
     }
- }
+}
 
 const getToken = () => {
     return localStorage.getItem("token")
@@ -19,7 +19,7 @@ const removeToken = () => {
 }
 
 
-export default { 
+export default {
     getRoleNameBytoken,
     getToken,
     removeToken,

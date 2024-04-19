@@ -3,18 +3,22 @@ import LandingPage from "@/modules/home/views/LandingPage.vue";
 
 export default [
     {
-        path: '/',
+        path: '/home',
+        name: 'home',
         component: LandingPage,
         meta: {
-            title: "Home"
+            title: "Home",
+            requireAuth: false
         },
     },
 
     {
         path: '/login',
+        name: 'login',
         component: Login,
         meta: {
-            title: "Login"
+            title: "Login",
+            requireAuth: false
         },
     },
 ]

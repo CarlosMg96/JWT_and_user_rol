@@ -1,4 +1,4 @@
-import AdminView from "@/mudules/admin/views/AdminView.vue";
+import AdminView from "@/modules/admin/views/AdminView.vue";
 
 export default [
     {
@@ -7,7 +7,8 @@ export default [
         component: AdminView,
         meta: {
             title:'Panel Admil',
-            role: 'admin'
+            role: 'admin',
+            requireAuth: true
         }
     }
 ]

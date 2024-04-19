@@ -1,42 +1,48 @@
-import Vue from 'vue'
 import VueRouter from 'vue-router'
 import publicRoutes from "@/router/publicRoutes";
 import privateRoutes from "@/router/privateRoutes";
 import util from "@/utils/util"
+import Unautorized from "@/views/Unautorized.vue";
 
 const routes = [
+
     {
-        path:'',
-        redirect: '/home'
+        path: '',
+        redirect: {name: 'home'},
+        meta: {
+            requireAuth: false
+        }
+    },
+
+    ...publicRoutes.map(route => {
+        route.meta.requireAuth = false
+        return {...route}
+    }),
+    ...privateRoutes.map(route => {
+        route.meta.requireAuth = true
+        return {...route}
+    }),
+
+    {
+        name: "unauthorized",
+        path: "unauthorized",
+        component: Unautorized,
+        meta: {
+            title: "Unautorized",
+            requireAuth: false
+        }
     },
     {
-        path: '/',
-        component: {
-            render (c){
-                return c("router-view")
-            }
-        },
-        children:[
-            ...publicRoutes.map(route => {
-                route.meta.requireAuth = false
-                return {...route}
-            }),
-            ...privateRoutes.map(route => {
-                route.meta.requireAuth = true
-                return {...route}
-            })
-        ]
-    },
-    {
-        path: '/*',
+        path: '/**',
         name: '404',
-        component: ()=> import('@/views/404.vue')
+        component: () => import('@/views/404.vue'),
+        meta: {
+            title: "404",
+            requireAuth: false
+        }
     },
-    {
-        name: "unautorized",
-        path: "/unautorized",
-        component: () => import("@/views/Unautorized.vue"),
-    }
+
+
 ]
 
 const router = new VueRouter({
@@ -45,28 +51,31 @@ const router = new VueRouter({
     routes
 })
 
- router.beforeEach(async (to, from, next)=> {
-    const publicPages = ['/login','/landigPage'];
-    const authRequired = !publicPages.includes(to.path)
+router.beforeEach(async (to, from, next) => {
+    const authRequired = to.meta.requireAuth
     const loggedIn = util.getToken()
-    
+
     if (authRequired && !loggedIn) {
-        return next('/login')
+        return next({name: "login"})
     }
-    if(loggedIn){
+    if (loggedIn) {
         const role = await util.getRoleNameBytoken()
 
-        if(role !== undefined && role !== null && role !== ""){
-            if(to.meta && to.meta.role && to.meta.role.toString().toLowerCase() !== role.toString().toLowerCase()){
-                return next("/unautorized")
+        if (role !== undefined && role !== null && role !== "") {
+            if (to.meta.role.toLowerCase() !== role.toLowerCase()) {
+                return next({name: "unauthorized"})
             }
-        }else{
-            return next("/login")
+        } else {
+            return next({name: "login"})
         }
         next();
     }
-    if(loggedIn && to.path.toString().toLowerCase() === "/login"){
-        return next("/central-panel")
+    if (loggedIn && to.path.includes( "login" )) {
+        const role = await util.getRoleNameBytoken()
+        if (role.toLowerCase() === "admin") return next({name: "adminView"})
+        if (role.toLowerCase() === "client") return next({name: "userView"})
+        localStorage.removeItem("token")
+        return next({name: "login"})
     }
     next()
 })

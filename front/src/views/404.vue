@@ -3,7 +3,7 @@
       <div class="error_container">
         <div class="error_code">
           <p>
-            403
+            404
           </p>
         </div>
         <div class="error_name">
@@ -19,6 +19,7 @@
   
   <script>
   export default {
+    name: 'NotFound'
   
   }
   </script>
