@@ -45,6 +45,11 @@ public class PersonService {
         personRepository.deleteById(id);
     }
 
+    public boolean existsByEmail(String email) {
+        // Utiliza el repositorio para verificar si existe una persona con el correo electrónico dado
+        return personRepository.existsByEmail(email);
+    }
+
     public Person registerClient(String fullname, String email, String password) {
         if (personRepository.findByEmail(email).isPresent()) {
             throw new RuntimeException("El usuario ya existe");

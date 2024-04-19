@@ -5,6 +5,7 @@ import mx.edu.utez.back.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,14 +21,14 @@ public class PersonController {
     }
 
     @GetMapping
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<Person>> getAllPeople() {
         List<Person> people = personService.getAllPeople();
         return ResponseEntity.ok(people);
     }
 
     @GetMapping("/{id}")
-    @Secured({"ROLE_ADMIN", "ROLE_CLIENT"})
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_CLIENT')")
     public ResponseEntity<Person> getPersonById(@PathVariable Long id) {
         return personService.getPersonById(id)
                 .map(ResponseEntity::ok)
@@ -41,7 +42,7 @@ public class PersonController {
     }
 
     @DeleteMapping("/{id}")
-    @Secured("ROLE_ADMIN")
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<Void> deletePersonById(@PathVariable Long id) {
         personService.deletePersonById(id);
         return ResponseEntity.noContent().build();
