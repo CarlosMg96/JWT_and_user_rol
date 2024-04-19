@@ -7,7 +7,7 @@ export default [
         component: AdminView,
         meta: {
             title:'Panel Admil',
-            role: 'admin',
+            role: 'ROLE_ADMIN',
             requireAuth: true
         }
     }
