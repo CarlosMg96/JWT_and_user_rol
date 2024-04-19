@@ -45,6 +45,19 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  animation: fall 2s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fall {
+  from{
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 </style>
   

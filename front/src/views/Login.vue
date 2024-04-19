@@ -8,13 +8,13 @@
               <h1>Inicio de sesión</h1>
               <div class="form-group mt-3">
                 <label for="email">Correo electrónico</label>
-                <input id="email" aria-describedby="emailHelp" class="form-control"
+                <BInput id="email" aria-describedby="emailHelp" class="form-control"
                        placeholder="Ingresa tu correo electrónico"
-                       type="email">
+                       type="email"/>
               </div>
               <div class="form-group mt-3">
                 <label for="password">Contraseña</label>
-                <input id="password" class="form-control" placeholder="Contraseña" type="password">
+                <BInput id="password" class="form-control" placeholder="Contraseña" type="password"/>
               </div>
             </div>
             <div class="text-center">
@@ -61,6 +61,19 @@ export default {
   --webkit-backdrop-filter: blur(17px);
   backdrop-filter: blur(17px);
   color: white;
+  animation: fall 2s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fall {
+  from{
+    transform: translateY(-100px);
+    opacity: 0;
+  }
+  to{
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .form-control {
