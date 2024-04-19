@@ -75,9 +75,9 @@ router.beforeEach(async (to, from, next) => {
         } else {
             return next({name: "login"})
         }
-        next();
+        return next();
     }
-    next()
+    return next()
 })
 
 
